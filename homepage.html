@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>RekomendasiDestinasi</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+    }
+    .hero {
+      background: linear-gradient(135deg, #800000, #a00000);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .hero h1 {
+      font-size: 36px;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+    .hero p {
+      font-size: 18px;
+      margin-top: 10px;
+      animation: fadeIn 1.6s ease-in-out;
+    }
+    .btn-container {
+      margin-top: 30px;
+    }
+    .btn {
+      background-color: #00c853;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin: 0 10px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background-color: #00b342;
+    }
+    .quote {
+      font-style: italic;
+      margin-top: 30px;
+      font-size: 14px;
+      color: #ffe;
+    }
+    .section {
+      padding: 40px 20px;
+    }
+    .section h2 {
+      color: #800000;
+      font-size: 24px;
+      margin-bottom: 25px;
+    }
+    .cards {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 240px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+    .card h3 {
+      font-size: 16px;
+      margin-bottom: 4px;
+      color: #333;
+    }
+    .card p {
+      color: #777;
+      font-size: 14px;
+      margin: 4px 0;
+    }
+    .badge {
+      display: inline-block;
+      background: #ffd700;
+      color: #333;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    footer {
+      background-color: #00c853;
+      color: white;
+      padding: 12px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Selamat Datang di RekomendasiDestinasi</h1>
+  <p>Temukan destinasi wisata terbaik di Indonesia berdasarkan rekomendasi pengunjung.</p>
+  
+  <div class="btn-container">
+    <a href="/login"><button class="btn">Masuk</button></a>
+    <a href="/register"><button class="btn">Daftar</button></a>
+  </div>
+
+  <div class="quote">"Dapatkan rekomendasi wisata khusus untukmu setelah mendaftar."</div>
+</div>
+
+<div class="section">
+  <h2>Destinasi Populer</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>The Lodge Maribaya</h3>
+      <p>📍 Bandung</p>
+      <p>⭐ 4.7 | 💰 Rp25.000</p>
+      <p>Kategori: Alam</p>
+      <div class="badge">Favorit</div>
+    </div>
+    <div class="card">
+      <h3>Pantai Ngandong</h3>
+      <p>📍 Yogyakarta</p>
+      <p>⭐ 4.6 | 💰 Gratis</p>
+      <p>Kategori: Bahari</p>
+      <div class="badge">Top Rated</div>
+    </div>
+    <div class="card">
+      <h3>TMII</h3>
+      <p>📍 Jakarta</p>
+      <p>⭐ 4.8 | 💰 Rp20.000</p>
+      <p>Kategori: Budaya</p>
+    </div>
+    <div class="card">
+      <h3>Taman Kasmaran</h3>
+      <p>📍 Semarang</p>
+      <p>⭐ 4.5 | 💰 Rp10.000</p>
+      <p>Kategori: Taman</p>
+    </div>
+    <div class="card">
+      <h3>Gunung Papandayan</h3>
+      <p>📍 Bandung</p>
+      <p>⭐ 4.9 | 💰 Rp30.000</p>
+      <p>Kategori: Alam</p>
+      <div class="badge">Paling Direkomendasikan</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 RekomendasiDestinasi
+</footer>
+
+</body>
+</html>

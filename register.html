@@ -1,0 +1,64 @@
+<!-- templates/register.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrasi</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .form-container {
+      max-width: 400px;
+      margin: auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #00695c;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      background-color: #4caf50;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .login-link {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .login-link a {
+      color: #00695c;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Registrasi</h2>
+    <form method="post">
+      <input type="text" name="fullname" placeholder="Nama Lengkap" required><br>
+      <input type="text" name="username" placeholder="Username" required><br>
+      <input type="password" name="password" placeholder="Password" required><br>
+      <button type="submit">Daftar</button>
+    </form>
+    <p class="login-link">Sudah punya akun? <a href="{{ url_for('login') }}">Login di sini</a></p>
+  </div>
+</body>
+</html>

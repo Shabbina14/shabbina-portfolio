@@ -1,0 +1,46 @@
+<!-- templates/logout.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Logout</title>
+    <style>
+        body { font-family: Arial; background: #fff; margin: 0; padding-bottom: 60px; text-align: center; }
+        h2 { margin-top: 50px; color: maroon; }
+        a.button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: limegreen;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: limegreen;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+        }
+        .bottom-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Berhasil Logout</h2>
+    <a href="{{ url_for('login') }}" class="button">Login Kembali</a>
+    <div class="bottom-nav">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('wishlist') }}">Wishlist</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+    </div>
+</body>
+</html>

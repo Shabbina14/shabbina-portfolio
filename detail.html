@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ detail.Place_Name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-top: 30px;
+            margin-bottom: 60px;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .btn-back, .btn-wishlist {
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        .btn-back { background-color: #ccc; color: #333; }
+        .btn-wishlist { background-color: #e53935; color: white; }
+        h1 { margin-bottom: 15px; color: #00695c; }
+        .map {
+            width: 100%;
+            height: 300px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .komentar {
+            background: #e3f2fd;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+        .form-komentar {
+            margin-top: 30px;
+            background-color: #f1f8e9;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        textarea, input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+        }
+        .btn-kirim, .btn-lihat-semua {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-kirim { background: #43a047; color: white; }
+        .btn-lihat-semua { background: #1976d2; color: white; text-decoration: none; display: inline-block; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <a href="/" class="btn-back">⬅ Kembali</a>
+            <a href="{{ url_for('add_wishlist', place_id=detail.Place_Id) }}" class="btn-wishlist">❤️ Simpan ke Wishlist</a>
+        </div>
+
+        <h1>{{ detail.Place_Name }}</h1>
+
+        {% if detail.cluster_label == 1 %}
+            <p style="color: #e53935; font-weight: bold;">🌟 Favorit Wisatawan</p>
+        {% endif %}
+
+        <p>📍 <strong>Kota:</strong> {{ detail.City }}</p>
+        <p>🏷️ <strong>Kategori:</strong> {{ detail.Category }}</p>
+        <p>💰 <strong>Harga Tiket:</strong> Rp{{ detail.Price | format_price }}</p>
+        <p>⭐ <strong>Rating:</strong> {{ detail.Rating or detail.Rating_x }}/5</p>
+        <p>📝 <strong>Deskripsi:</strong> {{ detail.Description }}</p>
+
+        {% if detail.Lat and detail.Long %}
+            <div id="map" class="map"></div>
+        {% else %}
+            <p><em>Lokasi peta tidak tersedia.</em></p>
+        {% endif %}
+
+        <hr>
+        <h3 style="color:#00695c;">Komentar Pengunjung</h3>
+
+        {% for k in komentar_list %}
+            <div class="komentar">
+                <strong>{{ k.username }}</strong> - Rating: {{ k.rating }}/5<br>
+                {{ k.isi }}<br>
+                <small><em>{{ k.created_at }}</em></small>
+            </div>
+        {% else %}
+            <p><em>Belum ada komentar untuk destinasi ini.</em></p>
+        {% endfor %}
+
+        {% if komentar_list|length > 3 and not show_all %}
+            <a href="{{ url_for('detail', place_id=detail.Place_Id, all='true') }}" class="btn-lihat-semua">Lihat Semua Komentar</a>
+        {% endif %}
+
+        {% if session.get('username') %}
+        <div class="form-komentar">
+            <form method="POST">
+                <label for="komentar">Tulis Komentar:</label>
+                <textarea name="komentar" required></textarea>
+                <label for="rating">Beri Rating (1-5):</label>
+                <input type="number" name="rating" min="1" max="5" required>
+                <button type="submit" class="btn-kirim">Kirim</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if detail.Lat and detail.Long %}
+    <script>
+        function initMap() {
+            var lokasi = { lat: parseFloat("{{ detail.Lat }}"), lng: parseFloat("{{ detail.Long }}") };
+            var map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 14,
+                center: lokasi
+            });
+            new google.maps.Marker({ position: lokasi, map: map });
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwIx-7u24F9D0cMHM-7wdZntmhQUxBmok&callback=initMap">
+    </script>
+    {% endif %}
+</body>
+</html>

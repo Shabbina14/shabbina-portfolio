@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda - Rekomendasi Destinasi</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9f9f9;
+            padding-bottom: 100px;
+        }
+        .topbar {
+            background-color: #800000;
+            color: white;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .topbar h2 {
+            margin: 0;
+        }
+        .filter-bar {
+            background-color: #eee;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        select, input[type="text"], button {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        .section {
+            padding: 20px;
+        }
+        .section h3 {
+            color: #a00000;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cards-horizontal {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        .cards-horizontal::-webkit-scrollbar {
+            height: 8px;
+        }
+        .cards-horizontal::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+        .cards-vertical {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 12px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            min-width: 230px;
+            flex-shrink: 0;
+        }
+        .card h4 {
+            margin: 0 0 6px;
+        }
+        .card p {
+            margin: 4px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        .see-all-link {
+            margin-top: 10px;
+            text-align: right;
+        }
+        .see-all-link a {
+            text-decoration: none;
+            color: #800000;
+            font-weight: bold;
+        }
+        .footer {
+            background-color: #00c853;
+            color: white;
+            text-align: center;
+            padding: 14px 10px;
+            font-weight: bold;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            gap: 4px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <h2>Selamat Datang, {{ username }}</h2>
+        <form action="/search" method="get">
+            <input type="text" name="query" placeholder="Cari destinasi..." required>
+            <button type="submit">🔍</button>
+        </form>
+    </div>
+
+    <div class="filter-bar">
+        <form action="{{ url_for('filter') }}" method="get">
+            <select name="kategori">
+                <option value="">Semua Kategori</option>
+                {% for k in kategori_list %}
+                <option value="{{ k }}">{{ k }}</option>
+                {% endfor %}
+            </select>
+            <select name="kota">
+                <option value="">Semua Kota</option>
+                {% for c in kota_list %}
+                <option value="{{ c }}">{{ c }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="harga_max" placeholder="Harga Maksimum">
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+
+    <div class="section">
+        <h3>🌟 Rekomendasi Destinasi</h3>
+        <div class="cards-horizontal">
+            {% for item in rekomendasi %}
+            <div class="card">
+                <h4><a href="{{ url_for('detail', place_id=item.Place_Id) }}">{{ item.Place_Name }}</a></h4>
+                <p>📍 {{ item.City }}</p>
+                <p>💰 Rp{{ item.Price | format_price }}</p>
+                <p>🏷️ {{ item.Category }}</p>
+                <p>⭐ {{ item.Rating or '0.0' }}/5.0</p>
+                {% if item.is_favorit %}
+                <p><span class="icon">🌟</span><strong>Favorit Wisatawan</strong></p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>🎲 Destinasi Acak <a href="{{ url_for('semua_destinasi') }}" style="font-size:14px; color:green; float: right; text-decoration: none;">Lihat Semua ➤</a></h3>
+        <div class="cards-vertical">
+            {% for d in destinasi_acak %}
+            <div class="card">
+                <h4><a href="{{ url_for('detail', place_id=d.Place_Id) }}">{{ d.Place_Name }}</a></h4>
+                <p>📍 {{ d.City }}</p>
+                <p>💰 Rp{{ d.Price | format_price }}</p>
+                <p>🏷️ {{ d.Category }}</p>
+                <p>⭐ {{ d.Rating or '0.0' }}/5.0</p>
+                {% if d.Place_Id in rekomendasi_ids %}
+                <p><span class="icon">🌟</span><strong>Favorit Wisatawan</strong></p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="footer">
+        <a href="/home">🏠 Beranda</a>
+        <a href="/wishlist">❤️ Wishlist</a>
+        <a href="/profile">👤 Profil</a>
+    </div>
+</body>
+</html>

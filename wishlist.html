@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Wishlist Saya</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9f9fb;
+            margin: 0;
+            padding-bottom: 100px;
+        }
+        .header {
+            background-color: #800000;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .wishlist-item {
+            background-color: #fffbe7;
+            margin: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .wishlist-item h4 {
+            margin: 0 0 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .wishlist-item p {
+            margin: 4px 0;
+        }
+        .wishlist-item a.detail-link {
+            color: #4caf50;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .wishlist-item a.delete-link {
+            color: white;
+            background-color: #e53935;
+            padding: 6px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 8px;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #00c853;
+            display: flex;
+            justify-content: space-around;
+            padding: 14px 0;
+            z-index: 10;
+        }
+        .bottom-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            gap: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2>❤️ Wishlist Saya</h2>
+    </div>
+
+    {% for item in items %}
+    <div class="wishlist-item">
+        <h4>
+            <span>{{ item.Place_Name }}</span>
+            {% if item.Place_Id in rekomendasi_ids %}
+            <span style="color: #e53935; font-size: 0.9rem;">🌟 Favorit Wisatawan</span>
+            {% endif %}
+        </h4>
+
+        <p>📍 {{ item.City }} | 🏷️ {{ item.Category }}</p>
+        <p>💰 Harga: Rp{{ item.Price|format_price }} | ⭐ Rating: {{ item.Rating }}/5</p>
+
+        <a href="{{ url_for('detail', place_id=item.Place_Id) }}" class="detail-link">Lihat Detail</a><br>
+        <a href="{{ url_for('remove_wishlist', place_id=item.Place_Id) }}" class="delete-link">Hapus</a>
+    </div>
+    {% else %}
+    <div style="padding: 1rem; text-align: center;">Belum ada destinasi di wishlist Anda.</div>
+    {% endfor %}
+
+    <!-- Navigasi bawah -->
+    <div class="bottom-nav">
+        <a href="{{ url_for('index') }}">🏠 Beranda</a>
+        <a href="{{ url_for('wishlist') }}">❤️ Wishlist</a>
+        <a href="{{ url_for('profile') }}">👤 Profil</a>
+    </div>
+
+</body>
+</html>

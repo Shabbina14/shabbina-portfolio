@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Hasil Pencarian</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .card h4 {
+            margin: 0 0 6px;
+        }
+
+        .card p {
+            margin: 4px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            background-color: #800000;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        h2 {
+            color: #800000;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/" class="back-button">← Kembali ke Beranda</a>
+    <h2>Hasil Pencarian untuk "{{ query }}"</h2>
+
+    {% if hasil %}
+        {% for row in hasil %}
+        <div class="card">
+            <h4><a href="{{ url_for('detail', place_id=row.Place_Id) }}">{{ row.Place_Name }}</a></h4>
+            <p>📍 {{ row.City }}</p>
+            <p>💰 Rp{{ row.Price | format_price }}</p>
+            <p>🏷️ {{ row.Category }}</p>
+            <p>⭐ {{ row.Rating or '0.0' }}/5.0</p>
+            {% if row.is_favorit %}
+                <p><span style="color: gold;">🌟 <strong>Favorit Wisatawan</strong></span></p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Tidak ada hasil ditemukan untuk kata: <strong>{{ query }}</strong></p>
+    {% endif %}
+
+</body>
+</html>
