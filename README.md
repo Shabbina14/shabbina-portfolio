@@ -14,7 +14,7 @@ Fresh graduate Teknik Informatika dengan semangat belajar tinggi dan ketertarika
 ## 📌 Projects
 - **Sistem Rekomendasi Wisata**  
   Mengembangkan sistem rekomendasi berbasis K-Means Clustering menggunakan Python & Flask, dengan integrasi dataset dari Kaggle dan Google Maps.  
-  🔗 [Lihat Project](#) *(ganti dengan link repo projectmu)*
+  🔗 (https://github.com/shabbinaamelliaaa/shabbina-portfolio)
 
 ---
 
